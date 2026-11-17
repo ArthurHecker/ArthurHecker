@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://arthurhecker.space">
-    <img src="assets/header.svg" width="100%" alt="Arthur Hecker. Gravura: um dev diante de uma lua vermelha, às três da manhã. Balões: Oi! Eu sou o Arthur. Bem-vindo!">
+    <img src="assets/header.svg" width="100%" alt="Arthur Hecker. Gravura: um personagem diante de uma lua vermelha, às três da manhã. Balões: Este é o GitHub do Arthur. Bem-vindo!">
   </a>
 </p>
 
@@ -26,7 +26,8 @@
 
 - **Nome:** Arthur Hecker
 - **Estudo:** Engenharia da Computação na Faculdade Galileu e Ciência de Dados na Univesp
-- **Faço:** sites, bots, jogos e servidores, de ponta a ponta
+- **Faço:** sites, sistemas, bots e servidores, de ponta a ponta
+- **Integro:** APIs de pagamento (Stripe, Asaas), WhatsApp (Meta), Google APIs, TOTVS Protheus e Rastron (rastreamento de veículos)
 - **Gosto de:** web, 3D no navegador, dados e IA
 - **Servidor:** um Linux só meu, que eu mesmo administro (sim, às 3h)
 - **Status:** compilando... com café
@@ -49,6 +50,10 @@
   <img src="https://skillicons.dev/icons?i=python,django,flask,fastapi,js,html,css,threejs&theme=dark&perline=8" alt="Python, Django, Flask, FastAPI, JavaScript, HTML, CSS, Three.js"><br>
   <img src="https://skillicons.dev/icons?i=godot,blender,linux,ubuntu,docker,nginx,cloudflare,bash&theme=dark&perline=8" alt="Godot, Blender, Linux, Ubuntu, Docker, Nginx, Cloudflare, Bash"><br>
   <img src="https://skillicons.dev/icons?i=git,github,mysql,postgres,sqlite,redis,discord,vscode&theme=dark&perline=8" alt="Git, GitHub, MySQL, PostgreSQL, SQLite, Redis, Discord, VS Code">
+</p>
+
+<p align="center">
+  <img src="assets/integracoes.svg" width="100%" alt="Integrações de API: Stripe, Asaas, WhatsApp (Meta), Google APIs, TOTVS Protheus e Rastron (rastreamento de veículos)">
 </p>
 
 <br>

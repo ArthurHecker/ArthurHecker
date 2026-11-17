@@ -56,8 +56,8 @@ def balloon(cx, cy, rx, ry, tip, spiky=False, seed=3, n=None):
 def header():
     W, H = 860, 400
     s = Svg(W, H, 'Arthur Hecker',
-            'Gravura: um dev diante de uma lua vermelha, num balcão à noite; balões dizem '
-            '"Oi! Eu sou o Arthur.", "Bem-vindo!" e "Puxe uma cadeira, o código já está compilando...". '
+            'Gravura: um personagem diante de uma lua vermelha, num balcão à noite; balões dizem '
+            '"Este é o GitHub do Arthur.", "Bem-vindo!" e "Puxe uma cadeira, o código já está compilando...". '
             'No topo, um terminal às 03:00 digita o que o Arthur faz.')
     px, py, pw, ph = 2, 2, 846, 386
     s.add(panel(px, py, pw, ph, shadow=INK, off=8))
@@ -163,8 +163,8 @@ def header():
     b2 = pop(2.1, 6.2, shake=True)
     b3 = pop(6.9, 13.6)
     stroke = f'fill="{PAPER}" stroke="{INK}" stroke-width="2.4" stroke-linejoin="round"'
-    s.add(f'<g class="{b1}"><path d="{balloon(712, 96, 128, 38, (646, 186))}" {stroke}/>',
-          s.text(712, 106, 'Oi! Eu sou o Arthur.', 'hand', 29, INK, 'middle'), '</g>')
+    s.add(f'<g class="{b1}"><path d="{balloon(698, 96, 144, 40, (640, 188))}" {stroke}/>',
+          s.text(698, 105, 'Este é o GitHub do Arthur.', 'hand', 25, INK, 'middle'), '</g>')
     s.add(f'<g class="{b2}"><path d="{balloon(318, 118, 128, 64, (470, 200), spiky=True, seed=7)}" {stroke}/>',
           s.text(318, 131, 'Bem-vindo!', 'hand', 38, INK, 'middle', extra=f' stroke="{INK}" stroke-width=".9"'), '</g>')
     s.add(f'<g class="{b3}"><path d="{balloon(330, 120, 172, 56, (520, 214), seed=5)}" {stroke}/>',
@@ -187,6 +187,7 @@ def header():
     phrases = [
         'Engenharia da Computação + Ciência de Dados',
         'full-stack: Python, Django, JavaScript, Three.js',
+        'integrando APIs: Stripe, Asaas, WhatsApp, Google',
         'fazendo os dados contarem histórias',
         'administro o meu próprio servidor Linux',
         'corrigindo o último bug do dia...',
@@ -235,7 +236,7 @@ CHAPTERS = [
     ('II', 'ESTUDOS', 'Duas graduações',
      'Uma para construir os sistemas, outra para entender os dados que eles geram.'),
     ('III', 'FERRAMENTAS', 'Caixa de ferramentas',
-     'O que eu uso para transformar uma ideia em alguma coisa funcionando.'),
+     'O que eu uso para transformar uma ideia em alguma coisa funcionando, e as APIs que já conectei.'),
     ('IV', 'ATIVIDADE', 'Commits em gravura',
      'Os meus números do GitHub, desenhados no mesmo traço do meu site.'),
     ('V', 'CONTATO', 'Até a próxima',
@@ -300,7 +301,8 @@ def terminal():
         ('out', [('  nome      ', RED), ('Arthur Hecker', PAPER)]),
         ('out', [('  estudo    ', RED), ('Engenharia da Computação', PAPER), (' · Faculdade Galileu', DIM)]),
         ('out', [('            ', RED), ('Ciência de Dados', PAPER), (' · Univesp', DIM)]),
-        ('out', [('  faço      ', RED), ('sites, bots, jogos e servidores, de ponta a ponta', FG)]),
+        ('out', [('  faço      ', RED), ('sites, sistemas, bots e servidores, de ponta a ponta', FG)]),
+        ('out', [('  integro   ', RED), ('Stripe, Asaas, WhatsApp (Meta), Google, Protheus, Rastron', GOLD)]),
         ('out', [('  gosto de  ', RED), ('web, ', FG), ('3D no navegador', GOLD), (', dados e IA', FG)]),
         ('out', [('  servidor  ', RED), ('um Linux só meu, administrado por mim (às 3h, claro)', FG)]),
         ('out', [('  status    ', RED), ('compilando... ', FG), ('com café', DIM)]),
@@ -312,7 +314,7 @@ def terminal():
     s = Svg(W, H, 'C:\\WINDOWS\\system32\\cmd.exe — sobre o Arthur',
             'Terminal do Windows: whoami responde arthur-hecker; type sobre.txt mostra estudos '
             '(Engenharia da Computação na Faculdade Galileu e Ciência de Dados na Univesp), o que faz '
-            '(sites, bots, jogos e servidores), do que gosta e o servidor Linux próprio.')
+            '(sites, sistemas, bots e servidores), as APIs que integra, do que gosta e o servidor Linux próprio.')
     ww, wh = W - 12, H - 12
     s.add(f'<rect x="10" y="10" width="{ww}" height="{wh}" fill="{INK}"/>',
           f'<rect x="2" y="2" width="{ww}" height="{wh}" fill="{BG}" stroke="{INK}" stroke-width="2"/>',
@@ -360,6 +362,69 @@ def terminal():
                   f'<rect class="{bl}" x="{f1(16 + pw + 1)}" y="{y + 1}" width="{f1(ch)}" height="3" fill="{PAPER}"/></g>')
         y += lh
     save('terminal.svg', s)
+
+
+# ------------------------------------------------------------------ integrações
+
+INTEGRATIONS = [
+    ('Stripe', 'PAGAMENTOS'), ('Asaas', 'PIX · BOLETO · CARTÃO'), ('WhatsApp', 'MENSAGENS · META'),
+    ('Google APIs', 'SERVIÇOS DO GOOGLE'), ('Protheus', 'ERP · TOTVS'), ('Rastron', 'RASTREAMENTO VEICULAR'),
+]
+
+
+def integracoes():
+    W, H = 860, 336
+    s = Svg(W, H, 'Integrações de API',
+            'Diagrama: um sistema no centro trocando dados com Stripe, Asaas, WhatsApp (Meta), '
+            'Google APIs, TOTVS Protheus e Rastron (rastreamento de veículos).')
+    s.add(panel(2, 2, W - 12, H - 12, off=7))
+    s.add(s.text(24, 36, 'INTEGRAÇÕES DE API', 'sans8', 10.5, RED, ls=2.6),
+          s.text(W - 30, 36, 'serviços que eu já conectei a sistemas de verdade', 'hand', 18, GREY, 'end'))
+    cx, cy = 423, 186
+    nw, nh = 214, 58
+    ys = [82, 157, 232]
+    nodes = [(28, y) for y in ys] + [(W - 38 - nw, y) for y in ys]
+    paths = []
+    for i, ((nx, ny), (name, kind)) in enumerate(zip(nodes, INTEGRATIONS)):
+        left = i < 3
+        x0 = nx + nw if left else nx
+        y0 = ny + nh / 2
+        x1 = cx - 50 if left else cx + 50
+        mx = (x0 + x1) / 2
+        d = f'M{f1(x0)} {f1(y0)}C{f1(mx)} {f1(y0)} {f1(mx)} {f1(cy)} {f1(x1)} {f1(cy)}'
+        paths.append(d)
+        s.add(f'<path d="{d}" fill="none" stroke="{INK}" stroke-width="1.6" stroke-dasharray="1 5" stroke-linecap="round"/>')
+    # pacotes: pedido (vermelho) saindo do sistema e resposta (papel) voltando
+    for i, d in enumerate(paths):
+        b = i * 0.37
+        s.add(f'<circle r="4.6" fill="{RED}" stroke="{INK}" stroke-width="1.2" opacity="0">'
+              f'<animateMotion path="{d}" dur="2.2s" begin="{b:.2f}s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"/>'
+              f'<set attributeName="opacity" to="1" begin="{b:.2f}s"/></circle>',
+              f'<rect x="-4" y="-4" width="8" height="8" fill="{PAPER}" stroke="{INK}" stroke-width="1.3" opacity="0">'
+              f'<animateMotion path="{d}" dur="2.2s" begin="{b + 1.1:.2f}s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"/>'
+              f'<set attributeName="opacity" to="1" begin="{b + 1.1:.2f}s"/></rect>')
+    for (nx, ny), (name, kind) in zip(nodes, INTEGRATIONS):
+        s.add(f'<rect x="{nx + 5}" y="{ny + 5}" width="{nw}" height="{nh}" fill="{INK}"/>',
+              f'<rect x="{nx}" y="{ny}" width="{nw}" height="{nh}" fill="{PAPER}" stroke="{INK}" stroke-width="1.6"/>',
+              s.text(nx + 14, ny + 27, name, 'serif', 21, INK),
+              s.text(nx + 15, ny + 45, kind, 'sans8', 8.5, RED, ls=1.5))
+        ok = blink(s, 1.3 + (nx % 7) * 0.13)
+        s.add(f'<circle class="{ok}" cx="{nx + nw - 16}" cy="{ny + 16}" r="4" fill="{RED}"/>')
+    # o sistema no centro: lua gravada com { }
+    r = 50
+
+    def dm(x, y):
+        nx_, ny_ = (x - cx) / r, (y - cy) / r
+        return 0.08 + 0.7 * clamp(nx_ * -0.5 + ny_ * 0.7 + 0.45) ** 1.6
+    s.defs.append(f'<clipPath id="im"><circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath>')
+    pulse = css_anim(s, '0%,100%{transform:scale(1)}50%{transform:scale(1.06)}', 2.2, origin='center')
+    s.add(f'<g class="{pulse}"><circle cx="{cx}" cy="{cy}" r="{r + 9}" fill="{PAPER}" stroke="{INK}" stroke-width="2"/>'
+          f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{RED}" stroke="{INK}" stroke-width="1.5"/>'
+          f'<g clip-path="url(#im)"><path d="{engrave_h(cy - r, cy + r, cx - r, cx + r, 4.6, dm, 3.8)}" fill="#2a0204" opacity=".8"/></g>',
+          s.text(cx, cy + 12, '{ }', 'mono', 40, PAPER, 'middle', extra=f' stroke="{INK}" stroke-width="3" paint-order="stroke"'),
+          '</g>',
+          s.text(cx, cy + r + 34, 'SEU SISTEMA', 'sans8', 9.5, INK, 'middle', ls=2.4))
+    save('integracoes.svg', s)
 
 
 # ------------------------------------------------------------------ botões e rodapé
@@ -451,7 +516,8 @@ def main():
 
 
 BUILDERS = [('header', header), ('chapters', chapters), ('terminal', terminal),
-            ('buttons', buttons), ('footer', footer), ('vivo', lambda: vivo.build_all(OUT))]
+            ('integracoes', integracoes), ('buttons', buttons), ('footer', footer),
+            ('vivo', lambda: vivo.build_all(OUT))]
 
 if __name__ == '__main__':
     main()
