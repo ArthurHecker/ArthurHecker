@@ -3,8 +3,8 @@
     pip install fonttools brotli
     python tools/build.py
 
-As artes "ao vivo" (monitor, gravura das contribuições, cobra) são geradas pelo
-GitHub Actions em .github/workflows/vivo.yml.
+As artes com números do GitHub (painel, gravura, cobra) e a linha do tempo dos
+estudos vêm de tools/vivo.py: rode isto antes de cada push para atualizá-las.
 """
 from __future__ import annotations
 
@@ -14,7 +14,8 @@ import random
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from svgkit import (BOOK, CREAM, GOLD, GREY, GREY2, INK, LINE, PAPER, PAPER2, RED, Svg, Timeline,  # noqa: E402
+import vivo  # noqa: E402
+from svgkit import (BOOK, GOLD, GREY, GREY2, INK, PAPER, RED, Svg, Timeline,  # noqa: E402
                     blink, clamp, css_anim, engrave_h, engrave_v, f1, hand_line, panel)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -55,8 +56,8 @@ def balloon(cx, cy, rx, ry, tip, spiky=False, seed=3, n=None):
 def header():
     W, H = 860, 400
     s = Svg(W, H, 'Arthur Hecker',
-            'Gravura do arthurhecker.space: um dev de cabelo comprido diante de uma lua vermelha, '
-            'num balcão à noite; balões dizem "Ei, Arthur...", "Acorde." e "Você ainda tem muito trabalho a fazer...". '
+            'Gravura: um dev diante de uma lua vermelha, num balcão à noite; balões dizem '
+            '"Oi! Eu sou o Arthur.", "Bem-vindo!" e "Puxe uma cadeira, o código já está compilando...". '
             'No topo, um terminal às 03:00 digita o que o Arthur faz.')
     px, py, pw, ph = 2, 2, 846, 386
     s.add(panel(px, py, pw, ph, shadow=INK, off=8))
@@ -162,20 +163,20 @@ def header():
     b2 = pop(2.1, 6.2, shake=True)
     b3 = pop(6.9, 13.6)
     stroke = f'fill="{PAPER}" stroke="{INK}" stroke-width="2.4" stroke-linejoin="round"'
-    s.add(f'<g class="{b1}"><path d="{balloon(738, 98, 100, 38, (650, 186))}" {stroke}/>',
-          s.text(738, 109, 'Ei, Arthur...', 'hand', 34, INK, 'middle'), '</g>')
-    s.add(f'<g class="{b2}"><path d="{balloon(318, 118, 112, 62, (470, 200), spiky=True, seed=7)}" {stroke}/>',
-          s.text(318, 132, 'Acorde.', 'hand', 44, INK, 'middle', extra=f' stroke="{INK}" stroke-width=".9"'), '</g>')
-    s.add(f'<g class="{b3}"><path d="{balloon(330, 120, 168, 56, (520, 214), seed=5)}" {stroke}/>',
-          s.text(330, 112, 'Você ainda tem muito', 'hand', 30, INK, 'middle'),
-          s.text(330, 142, 'trabalho a fazer...', 'hand', 30, INK, 'middle'), '</g>')
+    s.add(f'<g class="{b1}"><path d="{balloon(712, 96, 128, 38, (646, 186))}" {stroke}/>',
+          s.text(712, 106, 'Oi! Eu sou o Arthur.', 'hand', 29, INK, 'middle'), '</g>')
+    s.add(f'<g class="{b2}"><path d="{balloon(318, 118, 128, 64, (470, 200), spiky=True, seed=7)}" {stroke}/>',
+          s.text(318, 131, 'Bem-vindo!', 'hand', 38, INK, 'middle', extra=f' stroke="{INK}" stroke-width=".9"'), '</g>')
+    s.add(f'<g class="{b3}"><path d="{balloon(330, 120, 172, 56, (520, 214), seed=5)}" {stroke}/>',
+          s.text(330, 112, 'Puxe uma cadeira, o código', 'hand', 28, INK, 'middle'),
+          s.text(330, 141, 'já está compilando...', 'hand', 28, INK, 'middle'), '</g>')
 
     # etiqueta com o nome (como a prévia do site)
     lx, ly, lw, lh = 24, 290, 372, 80
     s.add(f'<rect x="{lx + 6}" y="{ly + lh}" width="{lw}" height="7" fill="{RED}"/>',
           f'<rect x="{lx}" y="{ly}" width="{lw}" height="{lh}" fill="{PAPER}" stroke="{INK}" stroke-width="1.6"/>',
           s.text(lx + 18, ly + 50, 'Arthur Hecker', 'script', 56, INK),
-          s.text(lx + 22, ly + 69, 'HUB · ARTHURHECKER.SPACE', 'sans8', 11.5, RED, ls=3.1))
+          s.text(lx + 22, ly + 69, 'ARTHURHECKER.SPACE', 'sans8', 11.5, RED, ls=3.1))
 
     # barra do terminal: 03:00 e o que o Arthur faz, digitado em loop
     s.add(f'<rect x="{px}" y="{py}" width="{pw}" height="35" fill="{INK}"/>')
@@ -184,8 +185,9 @@ def header():
     pxw = BOOK.width('mono', prompt, fs)
     s.add(s.text(16, 27, prompt, 'mono', fs, GREY2))
     phrases = [
-        'estudante de Engenharia e de Ciência da Computação',
-        'full-stack: Python, Django, Quart, Three.js',
+        'Engenharia da Computação + Ciência de Dados',
+        'full-stack: Python, Django, JavaScript, Three.js',
+        'fazendo os dados contarem histórias',
         'jogos em Godot nas horas vagas (e nas não vagas)',
         'administro o meu próprio servidor Linux',
         'corrigindo o último bug do dia...',
@@ -229,20 +231,16 @@ def header():
 # ------------------------------------------------------------------ capítulos
 
 CHAPTERS = [
-    ('I', 'SOBRE MIM', 'Três da manhã',
-     'Três da manhã, o último bug do dia... e o sono chegando como fumaça, escurecendo a visão.'),
-    ('II', 'CONTATO', 'Um chat comigo mesmo',
-     'Abri o navegador e, numa aba, havia um chat para conversar comigo mesmo. Paranoia? Certamente é o Arthur.'),
-    ('III', 'ESTUDOS', 'O bug do Newton',
-     'Mudei de aba... e lá estava o Newton tropeçando na maçã, com o mesmo bug de sempre.'),
-    ('IV', 'PROJETOS', 'O arcade',
-     'Para parar de alucinar, tentei jogar alguma coisa no arcade e acordar de vez... mas tinha algo de errado.'),
-    ('V', 'AO VIVO', 'O PC superaqueceu',
-     'Só que o PC não aguentou e superaqueceu... inexplicavelmente. (Os números abaixo são de verdade.)'),
-    ('VI', 'FERRAMENTAS', 'Voltei a trabalhar',
-     '...então eu voltei a trabalhar. Só faltava mais um bug, não é?'),
-    ('VII', 'ATALHOS', 'Os atalhos',
-     'E, no fim da noite, os atalhos: as ferramentas e os projetos finalizados.'),
+    ('I', 'SOBRE MIM', 'Quem é o Arthur',
+     'Dev full-stack em formação, movido a café, curiosidade e bugs de madrugada.'),
+    ('II', 'ESTUDOS', 'Duas graduações',
+     'Uma para construir os sistemas, outra para entender os dados que eles geram.'),
+    ('III', 'FERRAMENTAS', 'Caixa de ferramentas',
+     'O que eu uso para transformar uma ideia em alguma coisa funcionando.'),
+    ('IV', 'ATIVIDADE', 'Commits em gravura',
+     'Os meus números do GitHub, desenhados no mesmo traço do meu site.'),
+    ('V', 'CONTATO', 'Até a próxima',
+     'Quer trocar uma ideia? É só chamar.'),
 ]
 
 
@@ -266,7 +264,8 @@ def chapter(num, tag, title, caption):
     nx = W - 40
     s.add(s.text(nx, H - 30, num, 'serif', 104, PAPER, 'end', extra=f' stroke="{PAPER}" stroke-width="12" stroke-linejoin="round"'),
           s.text(nx, H - 30, num, 'serif', 104, 'url(#hatch)', 'end', extra=f' stroke="{RED}" stroke-width="1.3"'))
-    s.add(s.text(26, 34, f'CAPÍTULO {num}  ·  {tag}', 'sans8', 11.5, RED, ls=3))
+    idx = [c[0] for c in CHAPTERS].index(num) + 1
+    s.add(s.text(26, 34, f'{idx:02d}  ·  {tag}', 'sans8', 11.5, RED, ls=3))
     s.add(s.text(24, 74, title, 'serif', 36, INK))
     tw = BOOK.width('serif', title, 36)
     line = hand_line(24, 86, 24 + tw + 18, amp=1.8)
@@ -300,12 +299,12 @@ def terminal():
         ('gap', None),
         ('cmd', 'type sobre.txt'),
         ('out', [('  nome      ', RED), ('Arthur Hecker Silva', PAPER)]),
-        ('out', [('  estudo    ', RED), ('Engenharia da Computação', PAPER), (' · Galileu (2023-2027)', DIM)]),
-        ('out', [('            ', RED), ('Ciência da Computação', PAPER), (' · Univesp (2024-2028)', DIM)]),
+        ('out', [('  estudo    ', RED), ('Engenharia da Computação', PAPER), (' · Faculdade Galileu', DIM)]),
+        ('out', [('            ', RED), ('Ciência de Dados', PAPER), (' · Univesp', DIM)]),
         ('out', [('  faço      ', RED), ('sites, bots, jogos e servidores, de ponta a ponta', FG)]),
+        ('out', [('  gosto de  ', RED), ('web, ', FG), ('3D no navegador', GOLD), (', dados e IA', FG)]),
         ('out', [('  servidor  ', RED), ('um Linux só meu, administrado por mim (às 3h, claro)', FG)]),
-        ('out', [('  agora     ', RED), ('o jogo ', FG), ('Formigas no Piquenique', GOLD), (', em Godot', FG)]),
-        ('out', [('  status    ', RED), ('compilando... ', FG), ('(eu não estava dormindo!)', DIM)]),
+        ('out', [('  status    ', RED), ('compilando... ', FG), ('com café', DIM)]),
         ('gap', None),
         ('end', None),
     ]
@@ -313,8 +312,8 @@ def terminal():
     H = top + 22 + lh * len(lines) + 20
     s = Svg(W, H, 'C:\\WINDOWS\\system32\\cmd.exe — sobre o Arthur',
             'Terminal do Windows: whoami responde arthur-hecker-silva; type sobre.txt mostra estudos '
-            '(Engenharia da Computação na Galileu e Ciência da Computação na Univesp), o que faz '
-            '(sites, bots, jogos e servidores), o servidor Linux próprio e o jogo em Godot.')
+            '(Engenharia da Computação na Faculdade Galileu e Ciência de Dados na Univesp), o que faz '
+            '(sites, bots, jogos e servidores), do que gosta e o servidor Linux próprio.')
     ww, wh = W - 12, H - 12
     s.add(f'<rect x="10" y="10" width="{ww}" height="{wh}" fill="{INK}"/>',
           f'<rect x="2" y="2" width="{ww}" height="{wh}" fill="{BG}" stroke="{INK}" stroke-width="2"/>',
@@ -364,319 +363,12 @@ def terminal():
     save('terminal.svg', s)
 
 
-# ------------------------------------------------------------------ chat comigo mesmo
-
-def chat():
-    W = 860
-    msgs = [
-        ('v', 'oi! quem é você?'),
-        ('a', 'Certamente é o Arthur.'),
-        ('v', 'e o que você faz da vida?'),
-        ('a', 'Sites, bots, jogos e servidores. Quase sempre às três da manhã.'),
-        ('v', 'como eu falo com você?'),
-        ('a', 'Pelos botões aqui embaixo. Ou com a minha IA, no arthurhecker.space.'),
-    ]
-    fs = 16
-    bh, gap = 40, 12
-    top = 86
-    H = top + len(msgs) * (bh + gap) + 86
-    s = Svg(W, H, 'Certamente é o Arthur — chat',
-            'Chat do site: o visitante pergunta quem é, e o Arthur responde "Certamente é o Arthur"; '
-            'faz sites, bots, jogos e servidores, quase sempre às três da manhã; contato pelos botões abaixo '
-            'ou pela IA em arthurhecker.space.')
-    s.add(panel(2, 2, W - 12, H - 12, off=7))
-    # cabeçalho: espelho como foto de perfil
-    s.add(f'<circle cx="44" cy="44" r="25" fill="{INK}"/>',
-          f'<ellipse cx="44" cy="44" rx="13" ry="17" fill="{PAPER}" stroke="{GOLD}" stroke-width="3"/>',
-          f'<path d="M38 36l7-6M37 44l11-10M40 51l9-8" stroke="{LINE}" stroke-width="1.6" stroke-linecap="round"/>',
-          s.text(82, 40, 'Certamente é o Arthur', 'sans7', 18, INK))
-    pulse = css_anim(s, '0%,100%{opacity:1}50%{opacity:.25}', 1.6)
-    s.add(f'<circle class="{pulse}" cx="88" cy="58" r="4.5" fill="{RED}"/>',
-          s.text(98, 63, 'online', 'sans', 13.5, GREY),
-          s.text(W - 34, 50, 'ARTHURHECKER.SPACE', 'sans8', 10.5, GREY2, 'end', ls=2.4),
-          f'<path d="M20 {top - 12}H{W - 24}" stroke="{LINE}" stroke-width="1.5"/>')
-    T = 21.0
-    tl = Timeline(s, T)
-    t = 0.6
-    y = top
-    for who, txt in msgs:
-        w = BOOK.width('sans', txt, fs) + 36
-        if who == 'a':
-            # "digitando..." antes da resposta
-            dots_on, dots_off = t, t + 1.1
-            c = tl.keyframes([(0, 'opacity:0'), (dots_on - .004, 'opacity:0'), (dots_on, 'opacity:1'),
-                              (dots_off - .004, 'opacity:1'), (dots_off, 'opacity:0'), (T, 'opacity:0')])
-            dots = []
-            for i in range(3):
-                b = css_anim(s, '0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}', 0.9)
-                s.css.append(f'.{b}{{animation-delay:{i * 0.15:.2f}s}}')
-                dots.append(f'<circle class="{b}" cx="{46 + i * 13}" cy="{y + bh / 2}" r="4" fill="{GREY2}"/>')
-            s.add(f'<g class="{c}"><rect x="26" y="{y}" width="78" height="{bh}" rx="14" fill="{PAPER2}" stroke="{INK}" stroke-width="1.4"/>',
-                  *dots, '</g>')
-            t = dots_off
-            c = tl.show(t, fade=.25, rise=6)
-            s.add(f'<g class="{c}"><path d="M{26 + 14} {y}H{26 + w - 14}a14 14 0 0 1 14 14V{y + bh - 14}a14 14 0 0 1 -14 14'
-                  f'H{26 + 4}a4 4 0 0 1 -4 -4V{y + 14}a14 14 0 0 1 14 -14Z" fill="{PAPER2}" stroke="{INK}" stroke-width="1.4"/>',
-                  s.text(26 + 18, y + 26, txt, 'sans', fs, INK), '</g>')
-            t += 1.0
-        else:
-            x = W - 30 - w
-            c = tl.show(t, fade=.25, rise=6)
-            s.add(f'<g class="{c}"><path d="M{x + 14} {y}H{x + w - 14}a14 14 0 0 1 14 14V{y + bh - 4}a4 4 0 0 1 -4 4'
-                  f'H{x + 14}a14 14 0 0 1 -14 -14V{y + 14}a14 14 0 0 1 14 -14Z" fill="{INK}"/>',
-                  s.text(x + 18, y + 26, txt, 'sans', fs, PAPER), '</g>')
-            t += 1.0
-        y += bh + gap
-    # campo de mensagem
-    iy = H - 74
-    s.add(f'<rect x="26" y="{iy}" width="{W - 120}" height="46" rx="23" fill="{PAPER}" stroke="{INK}" stroke-width="1.6"/>',
-          s.text(52, iy + 29, 'Diga algo para o Arthur...', 'sans', 15.5, GREY2),
-          f'<circle cx="{W - 60}" cy="{iy + 23}" r="23" fill="{RED}"/>',
-          f'<path transform="translate({W - 72} {iy + 11})" d="M2 21.5 23 12 2 2.5l.01 7.4L15 12 2.01 14.1z" fill="{PAPER}"/>')
-    save('chat.svg', s)
-
-
-# ------------------------------------------------------------------ o bug do Newton
-
-def newton():
-    W, H = 860, 350
-    s = Svg(W, H, 'O bug do Newton',
-            'Folha de caderno com o código da classe Isaac_Newton; a maçã cai, o Newton tropeça nela, '
-            'colisão detectada e os erros: "Ação e reação não definida", "Terceira lei de Newton não encontrada". Carimbo: BUG.')
-    s.add(panel(2, 2, W - 12, H - 12, off=7))
-    # caderno
-    s.defs.append(f'<clipPath id="nb"><rect x="3" y="3" width="{W - 14}" height="{H - 14}"/></clipPath>')
-    rows = ''.join(f'M3 {y}H{W - 11}' for y in range(58, H - 12, 28))
-    s.add(f'<g clip-path="url(#nb)"><path d="{rows}" stroke="#b9cfe0" stroke-width="1"/>'
-          f'<path d="M70 3V{H - 11}" stroke="{RED}" stroke-width="1.4" opacity=".55"/></g>')
-    for hy in (60, 175, 290):
-        s.add(f'<circle cx="32" cy="{hy}" r="9" fill="{CREAM}" stroke="{LINE}" stroke-width="1.5"/>')
-    s.add(s.text(84, 40, '// Criando a classe Personagem', 'hand', 18, GREY))
-    code = [
-        ([('class ', RED), ('Isaac_Newton {', INK)], 'c'),
-        ([('    constructor(x, y) { this.x = x; this.y = y; }', INK)], 'c'),
-        ([('    correr() { this.x += velocidade; }', INK)], 'c'),
-        ([('}', INK)], 'c'),
-        ([('maca.velocidade += gravidade * dt;', INK), ('   // 9.8 m/s²', GREY)], 'apple'),
-        ([('Newton.rotacao += 15;', INK), ('   // tropeçou!', GREY)], 'trip'),
-        ([('// COLISÃO DETECTADA: Isaac vs Maçã', RED)], 'hit'),
-        ([('ERROR: TypeError: Ação e reação não definida', RED)], 'err'),
-        ([('FATAL: Terceira lei de Newton não encontrada', RED)], 'err'),
-    ]
-    T = 13.0
-    tl = Timeline(s, T)
-    times = [0.4, 0.8, 1.2, 1.6, 2.3, 3.9, 4.7, 5.5, 6.1]
-    for i, ((runs, _k), t) in enumerate(zip(code, times)):
-        c = tl.show(t, fade=.2)
-        s.add(f'<g class="{c}">', s.rich(84, 68 + 28 * i, runs, font='hand', size=19), '</g>')
-
-    # cena: chão, árvore, maçã e o Newton de peruca
-    gy = 300
-    s.add(f'<path d="{hand_line(560, gy, 846, amp=1.6)}" fill="none" stroke="{INK}" stroke-width="2.2"/>')
-    s.add(f'<path d="M802 {gy}C804 260 798 230 806 196M794 {gy}C792 262 786 236 792 200M806 222l18 -18" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>')
-    tcx, tcy, tr = 792, 140, 54
-    crown = [(tcx, tcy, tr), (tcx - 46, tcy + 22, 32), (tcx + 22, tcy + 28, 30)]
-    s.defs.append('<clipPath id="crown">' + ''.join(f'<circle cx="{x}" cy="{y}" r="{r}"/>' for x, y, r in crown) + '</clipPath>')
-
-    def dtree(x, y):
-        return 0.25 + 0.6 * clamp((y - tcy + 40) / 110) + 0.2 * clamp((x - tcx) / 60)
-    s.add(f'<g clip-path="url(#crown)"><rect x="700" y="80" width="160" height="150" fill="{PAPER}"/>'
-          f'<path d="{engrave_h(86, 226, 700, 860, 4.6, dtree, 3.6)}" fill="{INK}"/></g>',
-          f'<g fill="none" stroke="{INK}" stroke-width="2">' + ''.join(f'<circle cx="{x}" cy="{y}" r="{r}"/>' for x, y, r in crown) + '</g>')
-    for ax, ay in ((820, 122), (766, 104), (808, 172)):
-        s.add(f'<circle cx="{ax}" cy="{ay}" r="6.5" fill="{RED}" stroke="{INK}" stroke-width="1.2"/>')
-    # maçã que cai (2,3 s) e quica
-    a0, a1, apx = 176, gy - 9, 666
-    apple = tl.keyframes([(0, 'transform:translateY(0)'), (2.3, 'transform:translateY(0)', 'cubic-bezier(.5,0,1,1)'),
-                          (2.85, f'transform:translateY({a1 - a0}px)', 'ease-out'),
-                          (3.0, f'transform:translateY({a1 - a0 - 12}px)', 'ease-in'),
-                          (3.15, f'transform:translateY({a1 - a0}px)'), (T - .4, f'transform:translateY({a1 - a0}px)'),
-                          (T - .2, 'transform:translateY(0)'), (T, 'transform:translateY(0)')])
-    s.add(f'<g class="{apple}"><circle cx="{apx}" cy="{a0}" r="9" fill="{RED}" stroke="{INK}" stroke-width="1.5"/>'
-          f'<path d="M{apx} {a0 - 9}c0 -5 2 -8 5 -9" stroke="{INK}" stroke-width="1.6" fill="none"/></g>')
-
-    # Newton: casaco escuro e peruca branca cacheada; anda, tropeça e cai
-    wig = ''.join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{PAPER}" stroke="{INK}" stroke-width="1.4"/>'
-                  for x, y, r in [(-10, -66, 6), (-12, -56, 5.5), (10, -66, 6), (12, -56, 5.5), (-6, -82, 6.5), (6, -82, 6.5), (0, -86, 6)])
-    legs = []
-    walk_end = 3.75
-    for side, ph in ((1, 0), (-1, 1)):
-        stops = [(0, 'transform:rotate(0deg)')]
-        k = 0
-        tt = 0.5
-        while tt < walk_end:
-            ang = 24 * side * (1 if (k + ph) % 2 == 0 else -1)
-            stops.append((tt, f'transform:rotate({ang}deg)', 'ease-in-out'))
-            tt += 0.3
-            k += 1
-        stops += [(walk_end + .05, 'transform:rotate(-30deg)'), (T - .4, 'transform:rotate(-30deg)'), (T, 'transform:rotate(0deg)')]
-        cl = tl.keyframes(stops)
-        s.css.append(f'.{cl}{{transform-box:view-box;transform-origin:0px -34px}}')
-        legs.append(f'<g class="{cl}"><path d="M0 -34L0 0" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
-                    f'<path d="M0 0h7" stroke="{INK}" stroke-width="4" stroke-linecap="round"/></g>')
-    body = (f'<path d="M-8 -62L8 -62L13 -26L-13 -26Z" fill="{INK}"/>'
-            f'<path d="M-6 -58L-15 -38M6 -58L15 -38" stroke="{INK}" stroke-width="3.6" stroke-linecap="round"/>'
-            f'<circle cx="0" cy="-72" r="10.5" fill="{PAPER}" stroke="{INK}" stroke-width="1.8"/>{wig}'
-            f'<circle cx="4.5" cy="-73" r="1.5" fill="{INK}"/>')
-    x_start, x_end = 548, 638
-    walk = tl.keyframes([(0, f'transform:translateX({x_start}px)'), (0.5, f'transform:translateX({x_start}px)'),
-                         (walk_end, f'transform:translateX({x_end}px)'), (T - .4, f'transform:translateX({x_end}px)'),
-                         (T - .2, f'transform:translateX({x_start}px)'), (T, f'transform:translateX({x_start}px)')])
-    fall = tl.keyframes([(0, 'transform:rotate(0deg)'), (walk_end, 'transform:rotate(0deg)', 'cubic-bezier(.5,0,.8,.6)'),
-                         (walk_end + .5, 'transform:rotate(84deg)', 'ease-out'), (walk_end + .62, 'transform:rotate(78deg)'),
-                         (walk_end + .72, 'transform:rotate(82deg)'), (T - .4, 'transform:rotate(82deg)'),
-                         (T - .2, 'transform:rotate(0deg)'), (T, 'transform:rotate(0deg)')])
-    s.css.append(f'.{fall}{{transform-box:view-box;transform-origin:15px 0px}}')
-    s.add(f'<g transform="translate(0 {gy - 2})"><g class="{walk}"><g class="{fall}"><g transform="scale(1.25)">{"".join(legs)}{body}</g></g></g></g>')
-    # estrelinhas da queda
-    stars = tl.show(walk_end + .55, T - .6, fade=.15)
-    st = ''.join(f'<path transform="translate({x} {y}) scale({k})" d="M0 -8L2 -2L8 0L2 2L0 8L-2 2L-8 0L-2 -2Z" fill="{c}"/>'
-                 for x, y, k, c in [(740, 256, 1.2, RED), (762, 242, .8, INK), (722, 238, .9, INK)])
-    s.add(f'<g class="{stars}">{st}</g>')
-    # carimbo BUG
-    stamp = tl.keyframes([(0, 'opacity:0;transform:scale(2.2) rotate(-14deg)'), (6.7, 'opacity:0;transform:scale(2.2) rotate(-14deg)', 'cubic-bezier(.3,0,.2,1)'),
-                          (6.95, 'opacity:.92;transform:scale(1) rotate(-14deg)'), (T - .6, 'opacity:.92;transform:scale(1) rotate(-14deg)'),
-                          (T - .3, 'opacity:0;transform:scale(1) rotate(-14deg)'), (T, 'opacity:0;transform:scale(1) rotate(-14deg)')])
-    s.css.append(f'.{stamp}{{transform-box:fill-box;transform-origin:center}}')
-    s.add(f'<g class="{stamp}"><rect x="590" y="40" width="150" height="62" rx="6" fill="none" stroke="{RED}" stroke-width="4.5"/>'
-          f'<rect x="597" y="47" width="136" height="48" rx="3" fill="none" stroke="{RED}" stroke-width="1.6"/>',
-          s.text(665, 88, 'BUG', 'serif', 44, RED, 'middle', ls=4), '</g>')
-    save('newton.svg', s)
-
-
-# ------------------------------------------------------------------ cartões dos projetos
-
-def icon(kind, cx, cy):
-    """Ícones em tinta (papel e vermelho) dentro de um círculo preto de raio 26."""
-    P, R = PAPER, RED
-    g = f'<circle cx="{cx}" cy="{cy}" r="26" fill="{INK}"/><g transform="translate({cx} {cy})">'
-    if kind == 'moon':
-        g += (f'<circle r="15" fill="{R}"/><path d="M-13 -5H13M-15 0H15M-14 5H14M-10 10H10" stroke="#2a0204" stroke-width="1.3"/>'
-              f'<circle r="18.5" fill="none" stroke="{P}" stroke-width="1.6"/>')
-    elif kind == 'robot':
-        g += (f'<rect x="-14" y="-10" width="28" height="22" rx="5" fill="{P}"/><path d="M0 -10V-17" stroke="{P}" stroke-width="2.4"/>'
-              f'<circle cy="-18" r="3" fill="{R}"/><circle cx="-6" cy="0" r="3.4" fill="{INK}"/><circle cx="6" cy="0" r="3.4" fill="{R}"/>'
-              f'<path d="M-6 7H6" stroke="{INK}" stroke-width="2"/><path d="M-18 -2V6M18 -2V6" stroke="{P}" stroke-width="3" stroke-linecap="round"/>')
-    elif kind == 'duck':
-        g += (f'<path d="M-15 8C-17 -4 -10 -15 1 -15C10 -15 14 -8 13 -2C13 4 9 9 3 11C-4 13 -12 13 -15 8Z" fill="{P}"/>'
-              f'<path d="M11 -5L22 -2L11 3Z" fill="{R}"/><circle cx="4" cy="-6" r="2.4" fill="{INK}"/>'
-              f'<path d="M-2 -10l7 -2" stroke="{INK}" stroke-width="1.8" stroke-linecap="round"/>')
-    elif kind == 'ant':
-        g += (f'<g stroke="{P}" stroke-width="1.8" fill="none" stroke-linecap="round"><path d="M-4 0L-10 -9M-4 0L-12 2M-4 0L-9 10M3 0L7 -10M3 0L12 1M3 0L8 11"/>'
-              f'<path d="M12 -5C15 -12 19 -13 21 -12M12 -5C17 -9 20 -7 22 -5"/></g>'
-              f'<ellipse cx="-12" cy="2" rx="7" ry="5.5" fill="{P}"/><ellipse cx="-1" cy="0" rx="5" ry="3.6" fill="{P}"/>'
-              f'<circle cx="10" cy="-3" r="5" fill="{R}"/>')
-    elif kind == 'school':
-        g += (f'<path d="M-15 -2L0 -14L15 -2V14H-15Z" fill="{P}"/><rect x="-4" y="4" width="8" height="10" fill="{INK}"/>'
-              f'<path d="M0 -14V-22h8v4h-8" fill="{R}" stroke="{P}" stroke-width="1.2"/>'
-              f'<path d="M-9 1h5v4h-5zM4 1h5v4h-5z" fill="{INK}"/>')
-    elif kind == 'grid':
-        g += (f'<path d="M-5 -15V15M5 -15V15M-15 -5H15M-15 5H15" stroke="{P}" stroke-width="2.4" stroke-linecap="round"/>'
-              f'<path d="M-13 -13l6 6M-7 -13l-6 6" stroke="{P}" stroke-width="2"/><circle cx="10" cy="10" r="3.6" fill="none" stroke="{R}" stroke-width="2.2"/>'
-              f'<circle cx="0" cy="0" r="3.6" fill="none" stroke="{R}" stroke-width="2.2"/>')
-    elif kind == 'pad':
-        g += (f'<rect x="-12" y="-15" width="22" height="30" rx="2" fill="{P}"/><path d="M-8 -7H6M-8 -1H6M-8 5H2" stroke="{INK}" stroke-width="1.6"/>'
-              f'<path d="M15 -12L19 -8L5 6L0 8L2 3Z" fill="{R}" stroke="{INK}" stroke-width="1"/>')
-    elif kind == 'server':
-        g += ''.join(f'<rect x="-14" y="{y}" width="28" height="8" rx="1.5" fill="{P}"/><path d="M-9 {y + 4}H0" stroke="{INK}" stroke-width="1.4"/>'
-                     for y in (-14, -4, 6))
-    g += '</g>'
-    return g
-
-
-PROJECTS = [
-    dict(id='hub', icon='moon', kind='SITE · WEBGL 3D', title='Hub 3D', status='NO AR',
-         desc='O meu site contado como uma história em gravura 3D: chat com IA, arcade, terminal, '
-              'o monitor do servidor com cooler e os atalhos para tudo.',
-         tags=['Three.js', 'WebGL', 'Quart']),
-    dict(id='mordekay', icon='robot', kind='IA · BOT', title='Mordekay', status='NO AR',
-         desc='Central de comandos com IA integrada para controlar o servidor, que também é o bot '
-              'do Discord que mantém tudo de pé.',
-         tags=['Python', 'Quart', 'Discord', 'Gemini']),
-    dict(id='pyro', icon='duck', kind='ASSISTENTE PESSOAL', title='Pyro', status='NO AR',
-         desc='O seu pato pessoal: botas grandes, bico afiado e rotina em ordem. Personagem 3D '
-              'procedural, chat com IA rodando no meu servidor e app para Android.',
-         tags=['Python', 'Ollama', 'PWA']),
-    dict(id='formigas', icon='ant', kind='JOGO · GODOT 4', title='Formigas no Piquenique', status='BETA FECHADO', cta='EM BREVE',
-         desc='Tower defense de caminhos e combinações: 42 defesas, 68 formigas, 60 ondas, '
-              'elementos que se misturam e três idiomas.',
-         tags=['Godot', 'GDScript', 'Blender']),
-    dict(id='webcei', icon='school', kind='UNIVESP · PROJETO INTEGRADOR', title='WebCEI', status='NO AR', cta='CÓDIGO  →',
-         desc='Site de uma creche de Botucatu feito com o time da Univesp: coleta, organização e '
-              'análise de dados, com leitura em voz alta.',
-         tags=['Django', 'Python', 'TTS']),
-    dict(id='velha', icon='grid', kind='MULTIPLAYER', title='Jogo da Velha Global', status='NO AR',
-         desc='Desafie qualquer pessoa em tempo real, no mesmo tabuleiro sincronizado para '
-              'todo mundo que estiver no site.',
-         tags=['JavaScript', 'Tempo real']),
-    dict(id='dontpad', icon='pad', kind='FERRAMENTA', title='Dontpad', status='NO AR',
-         desc='Bloco de notas no mesmo formato do dontpad.com: escolha um endereço, escreva '
-              'e compartilhe. Sem conta, sem cadastro.',
-         tags=['Python', 'JavaScript']),
-    dict(id='homelab', icon='server', kind='INFRAESTRUTURA', title='Homelab', status='SEMPRE LIGADO', cta='AO VIVO  ↓',
-         desc='O servidor por trás de tudo: nuvem de arquivos, e-mail, VPN, IA local e os sites, '
-              'em Docker e túneis da Cloudflare.',
-         tags=['Linux', 'Docker', 'Cloudflare', 'Nginx']),
-]
-
-
-def card(p):
-    W, H = 420, 236
-    s = Svg(W, H, p['title'], f"{p['kind']}: {p['desc']} Tecnologias: {', '.join(p['tags'])}. Situação: {p['status']}.")
-    s.add(panel(2, 2, W - 14, H - 14, off=8))
-    # gravura na borda direita
-    x0 = W - 78
-
-    def d(x, y):
-        return clamp((x - x0) / 66) ** 1.7 * 0.9
-    s.defs.append(f'<clipPath id="cc"><rect x="3" y="3" width="{W - 16}" height="{H - 16}"/></clipPath>')
-    s.add(f'<g clip-path="url(#cc)"><path d="{engrave_v(x0, W - 10, 0, H, 5.2, d, 4.4)}" fill="{INK}" opacity=".85"/></g>')
-    s.add(icon(p['icon'], 42, 46))
-    s.add(s.text(80, 34, p['kind'], 'sans8', 9.5, RED, ls=2.2))
-    tsize = min(25.0, 25 * 262 / BOOK.width('serif', p['title'], 25))
-    s.add(s.text(79, 63, p['title'], 'serif', tsize, INK))
-    y = 98
-    for ln in BOOK.wrap('sans', p['desc'], 13.5, 300)[:4]:
-        s.add(s.text(20, y, ln, 'sans', 13.5, '#2b2a28'))
-        y += 19.5
-    lab = p.get('cta', 'ABRIR  →')
-    lw = BOOK.width('sans8', lab, 9.5) + 2 * (len(lab) - 1) + 22
-    # etiquetas (as que cabem antes do botão)
-    x = 20
-    for tg in p['tags']:
-        w = BOOK.width('mono', tg, 17) + 14
-        if x + w > W - 26 - lw - 8:
-            break
-        s.add(f'<rect x="{f1(x)}" y="186" width="{f1(w)}" height="22" fill="{PAPER2}" stroke="{INK}" stroke-width="1.2"/>',
-              s.text(x + 7, 202, tg, 'mono', 17, INK))
-        x += w + 6
-    # situação
-    st = p['status']
-    sw = BOOK.width('sans8', st, 9) + 1.6 * (len(st) - 1) + 30
-    sx = W - 26 - sw
-    s.add(f'<rect x="{f1(sx)}" y="16" width="{f1(sw)}" height="22" rx="11" fill="{PAPER}" stroke="{INK}" stroke-width="1.3"/>')
-    pulse = css_anim(s, '0%,100%{opacity:1}50%{opacity:.2}', 1.8)
-    col = GOLD if 'BETA' in st else RED
-    s.add(f'<circle class="{pulse}" cx="{f1(sx + 12)}" cy="27" r="4" fill="{col}"/>',
-          s.text(sx + 21, 30.5, st, 'sans8', 9, INK, ls=1.6))
-    cta_fill = RED if 'BREVE' not in lab else GREY
-    s.add(f'<rect x="{f1(W - 26 - lw)}" y="186" width="{f1(lw)}" height="22" fill="{cta_fill}" stroke="{INK}" stroke-width="1.2"/>',
-          s.text(W - 26 - lw / 2, 200.5, lab, 'sans8', 9.5, PAPER, 'middle', ls=2))
-    save(f"card-{p['id']}.svg", s)
-
-
-def cards():
-    for p in PROJECTS:
-        card(p)
-
-
 # ------------------------------------------------------------------ botões e rodapé
 
 BUTTONS = [
     ('site', 'ARTHURHECKER.SPACE', 'moon'),
     ('linkedin', 'LINKEDIN', 'in'),
     ('instagram', 'INSTAGRAM', 'ig'),
-    ('ia', 'FALAR COM A IA', 'chat'),
     ('topo', 'VOLTAR AO INÍCIO', 'up'),
 ]
 
@@ -714,8 +406,7 @@ def buttons():
 def footer():
     W, H = 860, 300
     s = Svg(W, H, 'Arthur Hecker — fim da noite',
-            'Rodapé: o céu escuro clareando atrás da lua vermelha; "Arthur Hecker", "H U B", '
-            '"Desenvolvido por Arthur Hecker Silva" e "Alguns direitos possivelmente reservados".')
+            'Rodapé: céu escuro com a lua vermelha subindo; "Arthur Hecker", "obrigado pela visita".')
     s.add(f'<rect x="8" y="8" width="{W - 10}" height="{H - 10}" fill="{RED}"/>',
           f'<rect x="2" y="2" width="{W - 10}" height="{H - 10}" fill="{INK}" stroke="{INK}" stroke-width="2"/>')
     s.defs.append(f'<clipPath id="fc"><rect x="3" y="3" width="{W - 12}" height="{H - 12}"/></clipPath>')
@@ -746,9 +437,9 @@ def footer():
     s.add(f'<rect x="38" y="60" width="380" height="150" fill="{PAPER}" stroke="{INK}" stroke-width="2"/>',
           f'<rect x="44" y="210" width="380" height="7" fill="{RED}"/>',
           s.text(228, 122, 'Arthur Hecker', 'script', 60, INK, 'middle'),
-          s.text(228, 152, 'H U B', 'serif', 20, RED, 'middle', ls=6),
-          s.text(228, 178, 'DESENVOLVIDO POR ARTHUR HECKER SILVA', 'sans8', 9.5, GREY, 'middle', ls=2),
-          s.text(228, 198, '© 2026 · alguns direitos possivelmente reservados', 'hand', 16, GREY2, 'middle'))
+          s.text(228, 152, 'obrigado pela visita', 'serif', 19, RED, 'middle', ls=1),
+          s.text(228, 178, 'GITHUB.COM/ARTHURHECKER', 'sans8', 9.5, GREY, 'middle', ls=2),
+          s.text(228, 198, 'até o próximo commit', 'hand', 17, GREY2, 'middle'))
     save('footer.svg', s)
 
 
@@ -760,8 +451,8 @@ def main():
             fn()
 
 
-BUILDERS = [('header', header), ('chapters', chapters), ('terminal', terminal), ('chat', chat),
-            ('newton', newton), ('cards', cards), ('buttons', buttons), ('footer', footer)]
+BUILDERS = [('header', header), ('chapters', chapters), ('terminal', terminal),
+            ('buttons', buttons), ('footer', footer), ('vivo', lambda: vivo.build_all(OUT))]
 
 if __name__ == '__main__':
     main()
