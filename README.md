@@ -12,35 +12,19 @@
   <a href="https://www.instagram.com/thur_hecker/"><img src="assets/btn-instagram.svg" height="44" alt="Instagram"></a>
 </p>
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=ArthurHecker&label=visitas&color=e3060c&style=flat-square" alt="Visitas ao perfil">
-  <img src="https://img.shields.io/website?url=https%3A%2F%2Farthurhecker.space&up_message=no%20ar&down_message=fora%20do%20ar&label=arthurhecker.space&style=flat-square&labelColor=0b0b0d" alt="arthurhecker.space no ar?">
-  <img src="https://img.shields.io/badge/hor%C3%A1rio%20de%20pico-03%3A00-e3060c?style=flat-square&labelColor=0b0b0d" alt="Horário de pico: 03:00">
-</p>
-
-<p align="center">
-  <a href="#sobre">Sobre mim</a> ·
-  <a href="#estudos">Estudos</a> ·
-  <a href="#ferramentas">Ferramentas</a> ·
-  <a href="#atividade">Atividade</a> ·
-  <a href="#contato">Contato</a>
-</p>
-
 <br>
-
-<a id="sobre"></a>
 
 <img src="assets/cap-i.svg" width="100%" alt="Sobre mim: Quem é o Arthur">
 
 <p align="center">
-  <img src="assets/terminal.svg" width="100%" alt="Terminal do Windows: whoami → arthur-hecker-silva; type sobre.txt">
+  <img src="assets/terminal.svg" width="100%" alt="Terminal do Windows: whoami → arthur-hecker; type sobre.txt">
 </p>
 
 <details>
 <summary><b>Ler sem animação</b> <sub>(sobre.txt)</sub></summary>
 <br>
 
-- **Nome:** Arthur Hecker Silva
+- **Nome:** Arthur Hecker
 - **Estudo:** Engenharia da Computação na Faculdade Galileu e Ciência de Dados na Univesp
 - **Faço:** sites, bots, jogos e servidores, de ponta a ponta
 - **Gosto de:** web, 3D no navegador, dados e IA
@@ -51,8 +35,6 @@
 
 <br>
 
-<a id="estudos"></a>
-
 <img src="assets/cap-ii.svg" width="100%" alt="Estudos: Duas graduações">
 
 <p align="center">
@@ -60,8 +42,6 @@
 </p>
 
 <br>
-
-<a id="ferramentas"></a>
 
 <img src="assets/cap-iii.svg" width="100%" alt="Ferramentas: Caixa de ferramentas">
 
@@ -73,12 +53,10 @@
 
 <br>
 
-<a id="atividade"></a>
-
 <img src="assets/cap-iv.svg" width="100%" alt="Atividade: Commits em gravura">
 
 <p align="center">
-  <img src="assets/painel.svg" width="100%" alt="Painel: um cooler que gira conforme os commits dos últimos 30 dias, números do GitHub e linguagens">
+  <img src="assets/painel.svg" width="100%" alt="Painel: um cooler que gira conforme os commits dos últimos 30 dias, contribuições, sequência atual e linguagens">
 </p>
 
 <p align="center">
@@ -89,23 +67,7 @@
   <img src="assets/cobra.svg" width="100%" alt="Uma cobra vermelha percorre o calendário de contribuições e come os dias">
 </p>
 
-<details>
-<summary><b>Como isso funciona?</b></summary>
 <br>
-
-Tudo aqui é SVG desenhado por código ([`tools/build.py`](tools/build.py)), no mesmo traço de gravura do meu site:
-
-- **Cooler:** começa em 800 RPM e ganha **+120 RPM por commit** dos últimos 30 dias (no máximo 6.000). Commitou demais? Superaqueceu.
-- **Gravura:** cada linha vertical é uma semana do ano; a espessura mostra os commits de cada dia. O círculo vermelho marca o dia mais produtivo (ou o mais desesperado).
-- **Cobra:** percorre o calendário em zigue-zague e come os dias, um por um.
-
-Os números vêm do próprio GitHub, e cada quadro mostra a data da leitura.
-
-</details>
-
-<br>
-
-<a id="contato"></a>
 
 <img src="assets/cap-v.svg" width="100%" alt="Contato: Até a próxima">
 

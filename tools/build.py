@@ -188,7 +188,6 @@ def header():
         'Engenharia da Computação + Ciência de Dados',
         'full-stack: Python, Django, JavaScript, Three.js',
         'fazendo os dados contarem histórias',
-        'jogos em Godot nas horas vagas (e nas não vagas)',
         'administro o meu próprio servidor Linux',
         'corrigindo o último bug do dia...',
     ]
@@ -292,13 +291,13 @@ def terminal():
     # (tipo, conteúdo); conteúdo de 'out' pode ser lista de trechos (texto, cor)
     lines = [
         ('out', [('Microsoft Windows [versão 10.0.26100.300]', DIM)]),
-        ('out', [('(c) Arthur Hecker Silva. Alguns direitos possivelmente reservados.', DIM)]),
+        ('out', [('(c) Arthur Hecker. Alguns direitos possivelmente reservados.', DIM)]),
         ('gap', None),
         ('cmd', 'whoami'),
-        ('out', [('arthurhecker\\', DIM), ('arthur-hecker-silva', PAPER)]),
+        ('out', [('arthurhecker\\', DIM), ('arthur-hecker', PAPER)]),
         ('gap', None),
         ('cmd', 'type sobre.txt'),
-        ('out', [('  nome      ', RED), ('Arthur Hecker Silva', PAPER)]),
+        ('out', [('  nome      ', RED), ('Arthur Hecker', PAPER)]),
         ('out', [('  estudo    ', RED), ('Engenharia da Computação', PAPER), (' · Faculdade Galileu', DIM)]),
         ('out', [('            ', RED), ('Ciência de Dados', PAPER), (' · Univesp', DIM)]),
         ('out', [('  faço      ', RED), ('sites, bots, jogos e servidores, de ponta a ponta', FG)]),
@@ -311,7 +310,7 @@ def terminal():
     top = 36
     H = top + 22 + lh * len(lines) + 20
     s = Svg(W, H, 'C:\\WINDOWS\\system32\\cmd.exe — sobre o Arthur',
-            'Terminal do Windows: whoami responde arthur-hecker-silva; type sobre.txt mostra estudos '
+            'Terminal do Windows: whoami responde arthur-hecker; type sobre.txt mostra estudos '
             '(Engenharia da Computação na Faculdade Galileu e Ciência de Dados na Univesp), o que faz '
             '(sites, bots, jogos e servidores), do que gosta e o servidor Linux próprio.')
     ww, wh = W - 12, H - 12

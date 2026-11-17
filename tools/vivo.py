@@ -125,7 +125,7 @@ def painel(out, days, gh):
     W, H = 860, 336
     s = Svg(W, H, 'Painel do Arthur',
             'Um cooler que gira mais rápido quanto mais commits houve nos últimos 30 dias, '
-            'os números do GitHub e as linguagens dos repositórios.')
+            'contribuições no ano, nos últimos 30 dias, a sequência atual e as linguagens dos repositórios.')
     s.add(panel(2, 2, W - 12, H - 12, off=7))
     s.add(s.text(24, 35, 'PAINEL', 'sans8', 10.5, RED, ls=2.6),
           s.text(W - 30, 35, f'dados de {stamp()}', 'hand', 18, GREY, 'end'))
@@ -149,20 +149,18 @@ def painel(out, days, gh):
           s.text(cx, 318, '+120 RPM por commit nos últimos 30 dias', 'hand', 15.5, GREY, 'middle'))
 
     total = sum(n for _d, _l, n in days) if days else None
-    cur, best = streaks(days) if days else (None, None)
-    tiles = [('CONTRIBUIÇÕES NO ANO', total, ''), ('ÚLTIMOS 30 DIAS', last30, ''), ('SEQUÊNCIA ATUAL', cur, 'dias'),
-             ('MAIOR SEQUÊNCIA', best, 'dias'), ('REPOSITÓRIOS', gh and gh['repos'], ''), ('ESTRELAS', gh and gh['stars'], '')]
-    tx0, ty0, tw, th = 300, 52, 172, 66
+    cur = streaks(days)[0] if days else None
+    tiles = [('CONTRIBUIÇÕES NO ANO', total, ''), ('ÚLTIMOS 30 DIAS', last30, ''), ('SEQUÊNCIA ATUAL', cur, 'dias')]
+    tx0, ty0, tw, th = 300, 60, 172, 84
     for i, (lab, val, unit) in enumerate(tiles):
-        x = tx0 + (i % 3) * (tw + 9)
-        y = ty0 + (i // 3) * (th + 9)
-        s.add(f'<rect x="{x}" y="{y}" width="{tw}" height="{th}" fill="{PAPER2}" stroke="{INK}" stroke-width="1.3"/>',
-              s.text(x + 12, y + 38, '—' if val is None else fmt(val), 'serif', 28, RED if i == 0 else INK),
-              s.text(x + 12, y + 55, lab, 'sans8', 8, GREY, ls=1))
+        x = tx0 + i * (tw + 9)
+        s.add(f'<rect x="{x}" y="{ty0}" width="{tw}" height="{th}" fill="{PAPER2}" stroke="{INK}" stroke-width="1.3"/>',
+              s.text(x + 12, ty0 + 48, '—' if val is None else fmt(val), 'serif', 34, RED if i == 0 else INK),
+              s.text(x + 12, ty0 + 70, lab, 'sans8', 8.5, GREY, ls=1.2))
         if unit and val is not None:
-            s.add(s.text(x + tw - 10, y + 38, unit, 'hand', 15, GREY2, 'end'))
+            s.add(s.text(x + tw - 10, ty0 + 48, unit, 'hand', 16, GREY2, 'end'))
 
-    ly = 226
+    ly = 196
     s.add(s.text(tx0, ly, 'LINGUAGENS DOS REPOSITÓRIOS', 'sans8', 10, RED, ls=2.4))
     langs = list((gh or {}).get('langs') or [])
     tot = sum(v for _k, v in langs) or 1
@@ -180,11 +178,11 @@ def painel(out, days, gh):
         bars = []
         for (k, v), c in zip(top, cols):
             w = bw * v / tot
-            bars.append(f'<rect x="{f1(x)}" y="{ly + 10}" width="{f1(max(w, 1.5))}" height="16" fill="{c}"/>')
+            bars.append(f'<rect x="{f1(x)}" y="{ly + 12}" width="{f1(max(w, 1.5))}" height="18" fill="{c}"/>')
             x += w
         s.add(f'<g class="{grow}">{"".join(bars)}</g>',
-              f'<rect x="{bx}" y="{ly + 10}" width="{bw}" height="16" fill="none" stroke="{INK}" stroke-width="1.3"/>')
-        lx, lyy = bx, ly + 50
+              f'<rect x="{bx}" y="{ly + 12}" width="{bw}" height="18" fill="none" stroke="{INK}" stroke-width="1.3"/>')
+        lx, lyy = bx, ly + 56
         for (k, v), c in zip(top, cols):
             pc = v / tot * 100
             lab = f'{k} {pc:.0f}%' if pc >= 0.5 else f'{k} <1%'
