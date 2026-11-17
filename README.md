@@ -2,15 +2,15 @@
 
 <p align="center">
   <a href="https://arthurhecker.space">
-    <img src="arthurhecker/assets/header.svg" width="100%" alt="Arthur Hecker. Uma gravura: um dev de cabelo comprido diante de uma lua vermelha, às três da manhã. Balões: Ei, Arthur... Acorde. Você ainda tem muito trabalho a fazer...">
+    <img src="assets/header.svg" width="100%" alt="Arthur Hecker. Uma gravura: um dev de cabelo comprido diante de uma lua vermelha, às três da manhã. Balões: Ei, Arthur... Acorde. Você ainda tem muito trabalho a fazer...">
   </a>
 </p>
 
 <p align="center">
-  <a href="https://arthurhecker.space"><img src="arthurhecker/assets/btn-site.svg" height="44" alt="arthurhecker.space"></a>
-  <a href="https://www.linkedin.com/in/arthur-hecker-silva/"><img src="arthurhecker/assets/btn-linkedin.svg" height="44" alt="LinkedIn"></a>
-  <a href="https://www.instagram.com/thur_hecker/"><img src="arthurhecker/assets/btn-instagram.svg" height="44" alt="Instagram"></a>
-  <a href="https://arthurhecker.space"><img src="arthurhecker/assets/btn-ia.svg" height="44" alt="Falar com a IA"></a>
+  <a href="https://arthurhecker.space"><img src="assets/btn-site.svg" height="44" alt="arthurhecker.space"></a>
+  <a href="https://www.linkedin.com/in/arthur-hecker-silva/"><img src="assets/btn-linkedin.svg" height="44" alt="LinkedIn"></a>
+  <a href="https://www.instagram.com/thur_hecker/"><img src="assets/btn-instagram.svg" height="44" alt="Instagram"></a>
+  <a href="https://arthurhecker.space"><img src="assets/btn-ia.svg" height="44" alt="Falar com a IA"></a>
 </p>
 
 <p align="center">
@@ -35,10 +35,10 @@
 
 <a id="cap-1"></a>
 
-<img src="arthurhecker/assets/cap-i.svg" width="100%" alt="Capítulo I · Sobre mim: Três da manhã">
+<img src="assets/cap-i.svg" width="100%" alt="Capítulo I · Sobre mim: Três da manhã">
 
 <p align="center">
-  <img src="arthurhecker/assets/terminal.svg" width="100%" alt="Terminal do Windows: whoami → arthur-hecker-silva; type sobre.txt">
+  <img src="assets/terminal.svg" width="100%" alt="Terminal do Windows: whoami → arthur-hecker-silva; type sobre.txt">
 </p>
 
 <details>
@@ -58,11 +58,11 @@
 
 <a id="cap-2"></a>
 
-<img src="arthurhecker/assets/cap-ii.svg" width="100%" alt="Capítulo II · Contato: Um chat comigo mesmo">
+<img src="assets/cap-ii.svg" width="100%" alt="Capítulo II · Contato: Um chat comigo mesmo">
 
 <p align="center">
   <a href="https://arthurhecker.space">
-    <img src="arthurhecker/assets/chat.svg" width="100%" alt="Chat: — oi! quem é você? — Certamente é o Arthur. — e o que você faz da vida? — Sites, bots, jogos e servidores. Quase sempre às três da manhã.">
+    <img src="assets/chat.svg" width="100%" alt="Chat: — oi! quem é você? — Certamente é o Arthur. — e o que você faz da vida? — Sites, bots, jogos e servidores. Quase sempre às três da manhã.">
   </a>
 </p>
 
@@ -74,10 +74,10 @@
 
 <a id="cap-3"></a>
 
-<img src="arthurhecker/assets/cap-iii.svg" width="100%" alt="Capítulo III · Estudos: O bug do Newton">
+<img src="assets/cap-iii.svg" width="100%" alt="Capítulo III · Estudos: O bug do Newton">
 
 <p align="center">
-  <img src="arthurhecker/assets/newton.svg" width="100%" alt="Caderno com a classe Isaac_Newton; a maçã cai, o Newton tropeça e o código quebra: Ação e reação não definida. Carimbo: BUG.">
+  <img src="assets/newton.svg" width="100%" alt="Caderno com a classe Isaac_Newton; a maçã cai, o Newton tropeça e o código quebra: Ação e reação não definida. Carimbo: BUG.">
 </p>
 
 | | Curso | Onde | Quando |
@@ -90,17 +90,17 @@
 
 <a id="cap-4"></a>
 
-<img src="arthurhecker/assets/cap-iv.svg" width="100%" alt="Capítulo IV · Projetos: O arcade">
+<img src="assets/cap-iv.svg" width="100%" alt="Capítulo IV · Projetos: O arcade">
 
 <p align="center">
-  <a href="https://arthurhecker.space"><img src="arthurhecker/assets/card-hub.svg" width="49%" alt="Hub 3D: o site contado como uma história em gravura 3D"></a>
-  <a href="https://arthurhecker.space/morde"><img src="arthurhecker/assets/card-mordekay.svg" width="49%" alt="Mordekay: central de comandos com IA para o servidor e bot do Discord"></a>
-  <a href="https://pyro.arthurhecker.space"><img src="arthurhecker/assets/card-pyro.svg" width="49%" alt="Pyro: o pato pessoal, assistente com IA local"></a>
-  <img src="arthurhecker/assets/card-formigas.svg" width="49%" alt="Formigas no Piquenique: tower defense em Godot 4 (beta fechado)">
-  <a href="https://github.com/ArthurHecker/Projeto-Integrador-1"><img src="arthurhecker/assets/card-webcei.svg" width="49%" alt="WebCEI: projeto integrador da Univesp em Django"></a>
-  <a href="https://arthurhecker.space/jogovelha"><img src="arthurhecker/assets/card-velha.svg" width="49%" alt="Jogo da Velha Global: tabuleiro sincronizado em tempo real"></a>
-  <a href="https://arthurhecker.space/dontpad"><img src="arthurhecker/assets/card-dontpad.svg" width="49%" alt="Dontpad: bloco de notas compartilhado"></a>
-  <a href="#cap-5"><img src="arthurhecker/assets/card-homelab.svg" width="49%" alt="Homelab: o servidor por trás de tudo"></a>
+  <a href="https://arthurhecker.space"><img src="assets/card-hub.svg" width="49%" alt="Hub 3D: o site contado como uma história em gravura 3D"></a>
+  <a href="https://arthurhecker.space/morde"><img src="assets/card-mordekay.svg" width="49%" alt="Mordekay: central de comandos com IA para o servidor e bot do Discord"></a>
+  <a href="https://pyro.arthurhecker.space"><img src="assets/card-pyro.svg" width="49%" alt="Pyro: o pato pessoal, assistente com IA local"></a>
+  <img src="assets/card-formigas.svg" width="49%" alt="Formigas no Piquenique: tower defense em Godot 4 (beta fechado)">
+  <a href="https://github.com/ArthurHecker/Projeto-Integrador-1"><img src="assets/card-webcei.svg" width="49%" alt="WebCEI: projeto integrador da Univesp em Django"></a>
+  <a href="https://arthurhecker.space/jogovelha"><img src="assets/card-velha.svg" width="49%" alt="Jogo da Velha Global: tabuleiro sincronizado em tempo real"></a>
+  <a href="https://arthurhecker.space/dontpad"><img src="assets/card-dontpad.svg" width="49%" alt="Dontpad: bloco de notas compartilhado"></a>
+  <a href="#cap-5"><img src="assets/card-homelab.svg" width="49%" alt="Homelab: o servidor por trás de tudo"></a>
 </p>
 
 <p align="center"><sub><b>…e no meio do arcade, a cobra começou a comer os meus commits:</b></sub></p>
@@ -131,7 +131,7 @@ só que o pesadelo vai junto: o dino vira o rapaz do sonho, o Pac-Man ganha o ro
 
 <a id="cap-5"></a>
 
-<img src="arthurhecker/assets/cap-v.svg" width="100%" alt="Capítulo V · Ao vivo: O PC superaqueceu">
+<img src="assets/cap-v.svg" width="100%" alt="Capítulo V · Ao vivo: O PC superaqueceu">
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/ArthurHecker/ArthurHecker/output/monitor.svg" width="100%" alt="Monitor ao vivo: cooler que gira conforme os commits, números do GitHub, sites no ar e linguagens">
@@ -145,7 +145,7 @@ só que o pesadelo vai junto: o dino vira o rapaz do sonho, o Pac-Man ganha o ro
 <summary><b>Como isso funciona?</b> <sub>(spoiler: o cooler é de verdade, mais ou menos)</sub></summary>
 <br>
 
-A cada 3 horas, um [GitHub Actions](arthurhecker/.github/workflows/vivo.yml) roda [`live.py`](arthurhecker/.github/scripts/live.py) e redesenha estas artes:
+A cada 3 horas, um [GitHub Actions](.github/workflows/vivo.yml) roda [`live.py`](.github/scripts/live.py) e redesenha estas artes:
 
 - **Cooler:** começa em 800 RPM e ganha **+120 RPM por commit** dos últimos 30 dias (no máximo 6.000). Commitou demais? Superaqueceu.
 - **Números:** contribuições, sequências, repositórios e estrelas, lidos do próprio GitHub.
@@ -161,7 +161,7 @@ Nada aqui é inventado: se uma leitura falhar, o quadro mostra "sem leitura" at�
 
 <a id="cap-6"></a>
 
-<img src="arthurhecker/assets/cap-vi.svg" width="100%" alt="Capítulo VI · Ferramentas: Voltei a trabalhar">
+<img src="assets/cap-vi.svg" width="100%" alt="Capítulo VI · Ferramentas: Voltei a trabalhar">
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=python,django,flask,fastapi,js,html,css,threejs&theme=dark&perline=8" alt="Python, Django, Flask, FastAPI, JavaScript, HTML, CSS, Three.js"><br>
@@ -187,17 +187,17 @@ C:\Users\arthur> arthur --help
 
 <a id="cap-7"></a>
 
-<img src="arthurhecker/assets/cap-vii.svg" width="100%" alt="Capítulo VII · Atalhos: Os atalhos">
+<img src="assets/cap-vii.svg" width="100%" alt="Capítulo VII · Atalhos: Os atalhos">
 
 <p align="center">
-  <a href="https://arthurhecker.space"><img src="arthurhecker/assets/btn-site.svg" height="44" alt="arthurhecker.space"></a>
-  <a href="https://www.linkedin.com/in/arthur-hecker-silva/"><img src="arthurhecker/assets/btn-linkedin.svg" height="44" alt="LinkedIn"></a>
-  <a href="https://www.instagram.com/thur_hecker/"><img src="arthurhecker/assets/btn-instagram.svg" height="44" alt="Instagram"></a>
-  <a href="#topo"><img src="arthurhecker/assets/btn-topo.svg" height="44" alt="Voltar ao início"></a>
+  <a href="https://arthurhecker.space"><img src="assets/btn-site.svg" height="44" alt="arthurhecker.space"></a>
+  <a href="https://www.linkedin.com/in/arthur-hecker-silva/"><img src="assets/btn-linkedin.svg" height="44" alt="LinkedIn"></a>
+  <a href="https://www.instagram.com/thur_hecker/"><img src="assets/btn-instagram.svg" height="44" alt="Instagram"></a>
+  <a href="#topo"><img src="assets/btn-topo.svg" height="44" alt="Voltar ao início"></a>
 </p>
 
 <p align="center">
-  <a href="https://arthurhecker.space"><img src="arthurhecker/assets/footer.svg" width="100%" alt="Arthur Hecker · H U B · Desenvolvido por Arthur Hecker Silva"></a>
+  <a href="https://arthurhecker.space"><img src="assets/footer.svg" width="100%" alt="Arthur Hecker · H U B · Desenvolvido por Arthur Hecker Silva"></a>
 </p>
 
 <details>
